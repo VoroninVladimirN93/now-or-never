@@ -6,9 +6,9 @@ module.exports = (sequelize, DataTypes) => {
   class Book extends Model {
 
     static associate(models) {
-      this.hasMany(models.Library, {
+      this.belongsTo(models.Library, {
         foreignKey: "library_id",
-      });      this.hasMany(models.User, {
+      });      this.belongsTo(models.User, {
         foreignKey: "user_id",
       });
     }
