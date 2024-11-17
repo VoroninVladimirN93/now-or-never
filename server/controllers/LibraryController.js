@@ -1,12 +1,14 @@
-const UserService = require("../services/User.service");
+const LibraryService = require("../services/library.service");
 
-exports.createUserController = async (req, res) => {
-  const { name, email, password } = req.body;
+
+
+
+
+exports.createLibraryController = async (req, res) => {
+  const { address , name, } = req.body;
   try {
-    const user = await UserService.createUser({
-      name,
-      email,
-      password,
+    const user = await LibraryService.createLibrary({
+        address , name, 
     });
     res.status(201).json({ message: "success", user });
   } catch (error) {
@@ -14,10 +16,10 @@ exports.createUserController = async (req, res) => {
   }
 };
 
-exports.deleteUserController = async (req, res) => {
+exports.deleteLibraryController = async (req, res) => {
   const { id } = req.params;
   try {
-    const countDeleteUserCards = await UserService.deleteUser(id);
+    const countDeleteUserCards = await LibraryService.deleteLibrary(id);
     if (countDeleteUserCards > 0) {
       res.status(200).json({ message: "success" });
     } else {
@@ -28,30 +30,29 @@ exports.deleteUserController = async (req, res) => {
   }
 };
 
-exports.getAllUserController = async (req, res) => {
+exports.getAllLibrariesController = async (req, res) => {
   try {
-    const users = await UserService.getAllUsers();
+    const users = await LibraryService.getAllLibraries();
     res.status(200).json({ message: "success", users });
   } catch (error) {
     res.status(500).json({ message: error.message, user: [] });
   }
 };
 
-exports.updateUserController = async (req, res) => {
-  const { name, email, password } = req.body;
+exports.updateLibraryController = async (req, res) => {
   const { id } = req.params;
   try {
-    const countUpdate = await UserService.updateUser(req.body, id);
+    const countUpdate = await LibraryService.updateLibrary(req.body, id);
     res.status(200).json({ message: "success", countUpdate });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-exports.findOneUserController = async (req, res) => {
+exports.findByIdController = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await UserService.findOneUser(id);
+    const user = await LibraryService.findById(id);
     if (!user) {
       return res.status(404).json({ message: "User not found", user: null });
     }
